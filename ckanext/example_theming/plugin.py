@@ -1,11 +1,12 @@
 from __future__ import annotations
 
+import os
 from typing import Any
 from typing_extensions import override
 import ckan.plugins as plugins
 import ckan.plugins.toolkit as toolkit
+from ckan.lib.theme import Theme
 
-import os
 
 root = os.path.dirname(os.path.abspath(__file__))
 
@@ -18,10 +19,7 @@ class ExampleThemingPlugin(plugins.ITheme, plugins.IConfigurer, plugins.Singleto
         toolkit.add_resource("assets", "example_theming")
 
     @override
-    def register_themes(self) -> dict[str, dict[str, Any]]:
+    def register_themes(self) -> dict[str, Theme]:
         return {
-            "bare": {
-                "path": os.path.join(root, "themes/bare"),
-            },
-
+            "bare": Theme(os.path.join(root, "themes/bare")),
         }

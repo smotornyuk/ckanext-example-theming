@@ -1,0 +1,19 @@
+
+{% macro button(label, href=None, type="primary", size="md", icon=None, block=False, submit=False) %}
+    {%- if caller %}{% set label = caller() %}{% endif %}
+    {%- set btn_classes = ["btn", "btn-" ~ type] -%}
+    {%- if size != "md" %}{% do btn_classes.append("btn-" ~ size) %}{% endif %}
+    {%- if block %}{% do btn_classes.append("d-block w-100") %}{% endif %}
+
+    {%- if href %}
+        <a href="{{ href }}" class="{{ btn_classes|join(' ') }}">
+            {% if icon %}<i class="bi bi-{{ icon }}"></i>{% endif %}
+            {{ label }}
+        </a>
+    {%- else %}
+        <button type="{{ 'submit' if submit else 'button' }}" class="{{ btn_classes|join(' ') }}">
+            {% if icon %}<i class="bi bi-{{ icon }}"></i>{% endif %}
+            {{ label }}
+        </button>
+    {%- endif %}
+{% endmacro %}
